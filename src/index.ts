@@ -1,18 +1,20 @@
 import express from 'express';
-import { Request , Response } from 'express';
+import {Express,  Request , Response } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 
-
   
-const app = express();
+const app : Express = express();
 
 //middlewares
 app.use(express.json())
 
+// dotenv config for PORT and URL of DataBase
 dotenv.config()
 
 const PORT = process.env.PORT
+
+// Connection Method
 
 mongoose.connect(process.env.MONGO_URL  as string)
 .then(()=>{
@@ -25,6 +27,8 @@ mongoose.connect(process.env.MONGO_URL  as string)
 app.get('/', (req : Request , res : Response ) => {
   res.send('Hello, World!');
 });
+
+// listening to port in the server
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
