@@ -2,8 +2,7 @@ import express from 'express';
 import { Request , Response } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
-import   Auth  from './models/models'
-import  Recipe  from './models/models'
+
 
   
 const app = express();
