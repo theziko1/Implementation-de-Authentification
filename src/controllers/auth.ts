@@ -2,9 +2,10 @@ import { Request , Response } from "express"
 import {Auth} from "../models/models"
 
 
-// Create User (Create Method)
 
-export const CreateUser = (req : Request,res : Response) => {
+// User registration
+
+export const registration = (req : Request,res : Response) => {
      const {email , password} = req.body
      const newUser = new Auth({
         email,
@@ -20,9 +21,9 @@ export const CreateUser = (req : Request,res : Response) => {
 
 }  
 
-// Read Users (Get Users - READ Method)
+// User login
 
-   export const GetUsers = (req : Request , res : Response) => {
+   export const login = (req : Request , res : Response) => {
       const Users = Auth.find()
       try {
          if(Users)
@@ -32,39 +33,5 @@ export const CreateUser = (req : Request,res : Response) => {
       }
    }
 
-// Read User (Get User  by id - READ Method)
 
-   export const GetUser = (req : Request , res : Response) => {
-      const User = Auth.findById(req.query)
-      try {
-         if(User)
-         res.status(200).json({data : User})
-      } catch (error) {
-         res.status(500).json({error : "User not found"})
-      }
-   }
-
-// Update User (Update User by id - Update Method)
-   
-   export const UpdateUser = (req : Request , res : Response) => {
-      const User = Auth.findByIdAndUpdate(req.query,req.body)
-      try {
-         if(User)  
-         res.status(200).json({data : User})
-      } catch (error) {
-         res.status(500).json({error : "User not found"}) 
-      }
-   }
-
-// Delete User (Delete User by id - DELETE Method)
-
-   export const deleteUser = (req : Request , res : Response) => {
-      const User = Auth.findByIdAndDelete(req.query)
-      try {
-         if(User)
-         res.status(200).json({data : User})
-      } catch (error) {
-         res.status(500).json({error : "User not found"})
-      }
-   }
 
