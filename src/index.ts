@@ -1,13 +1,25 @@
 import express from 'express';
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
 import {Express,  Request , Response } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
+import { AuthRoutes } from './routes/auth';
+import { RecipeRoutes } from './routes/recipe';
 
   
 const app : Express = express();
 
 //middlewares
+app.use(cookieParser())
 app.use(express.json())
+app.use(express.urlencoded({extended : false}))
+app.use(cors({
+    credentials : true,
+    origin : "http://localhost:5173",
+}))
+app.use("/",AuthRoutes)
+app.use("/",RecipeRoutes)
 
 // dotenv config for PORT and URL of DataBase
 dotenv.config()

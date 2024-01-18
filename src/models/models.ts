@@ -1,24 +1,26 @@
 import mongoose from "mongoose";
 import  uniqueValidator from "mongoose-unique-validator";
-interface AuthSchema  {
+interface AuthSchema  extends mongoose.Document {
     email : string,
-    password : string
+    password : string    
 }
 
-interface RecipeSchema {
+
+
+interface RecipeSchema extends mongoose.Document {
     name : String,
     dishType : string,
     ingedients : string[],
     instruction : string[]
 }
 
-const AuthSchema = new mongoose.Schema<AuthSchema>({
+const AuthSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true }
 })
 
 
-const RecipeSchema = new mongoose.Schema<RecipeSchema>({
+const RecipeSchema = new mongoose.Schema({
     name : {type : String, required: true},
     dishType : {type : String, required: true},
     ingedients : {type : [String],},
@@ -28,7 +30,7 @@ const RecipeSchema = new mongoose.Schema<RecipeSchema>({
 
 AuthSchema.plugin(uniqueValidator)
 
-export const Auth = mongoose.model('auth',AuthSchema);
-export const  Recipe = mongoose.model('recipe',RecipeSchema)
+export const Auth = mongoose.model<AuthSchema>('auth',AuthSchema);
+export const  Recipe = mongoose.model<RecipeSchema>('recipe',RecipeSchema)
 
 
