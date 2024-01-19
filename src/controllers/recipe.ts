@@ -1,9 +1,14 @@
 import  { Request , Response } from 'express'
 import {Recipe} from '../models/models'
+import { validateRecipe } from '../middlewares/validate'
 
 // Create Recipe (Create Method)
 
 export const PostRecipe = (req : Request, res : Response) => {
+   const valid = validateRecipe(req.body)
+   if (valid.error) {
+      return res.status(401).send({error : valid.error.message})
+   }
     const {name , dishType , ingedients , instruction} = req.body
     const NewRecipe = new Recipe({
         name,
