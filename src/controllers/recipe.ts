@@ -1,5 +1,5 @@
 import  { Request , Response } from 'express'
-import {Recipe} from '../models/models'
+import {Recipe} from '../models/models'  
 
 // Create Recipe (Create Method)
 
