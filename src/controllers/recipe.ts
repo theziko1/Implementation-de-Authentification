@@ -27,33 +27,45 @@ export const PostRecipe = (req : Request, res : Response) => {
 // Read Recipes (Get Recipes - READ Method)
 
 export const GetRecipes = (req : Request , res : Response) => {
-    const GetRecipes = Recipe.find()
-      try {
-         if(GetRecipes)
-         res.status(200).json({data : GetRecipes})
-      } catch (error) {
-         res.status(500).json({error : "Recipes not found"})
-      }
+   Recipe.find()
+   .then((Recipes)=>{
+    res.status(200).json(Recipes)
+   })
+   .catch((error)=>{
+    res.status(500).json({ error : "Failed to retrieve recipes "})
+    console.log(error)
+   })
 }
 
 // Read Recipe (Get Recipe  by id - READ Method)
 
 export const GetRecipe = (req : Request , res : Response) => {
-    const GetRecipe = Recipe.findById(req.query)
-    try {
-       if(GetRecipe)
-       res.status(200).json({data : GetRecipe})
-    } catch (error) {
-       res.status(500).json({error : "Recipes not found"})
-    }
+   Recipe.findById(req.query.id)
+    
+    
+   .then((Recipe)=>{
+       if (Recipe) {
+           res.status(200).json(Recipe)
+       } else {
+           res.status(404).json({ error: 'Recipe not found' });
+       }
+    
+   })
+   .catch((error)=>{
+    res.status(500).json({ error : "Failed to retrieve recipes "})
+   })
 }
 
 // Update Recipe (Update Recipe by id - Update Method)
 
-export const UpdateRecipe = (req : Request , res : Response) => {
-    Recipe.findByIdAndUpdate(req.query,req.body)
-    try {
-       res.status(200).json({message : "Recipe is Updated"})
+export const UpdateRecipe = async (req : Request , res : Response) => {
+   try {
+   const { query: { id } } = req;
+   const updatedRecipe = await Recipe.findByIdAndUpdate(id,req.body,{ new: true })
+      if (!updatedRecipe) {
+         return res.status(404).json({ message: 'Recipe not found' });
+       }
+       res.status(200).json({data: updatedRecipe ,message : "Recipe is Updated"})
     } catch (error) {
        res.status(500).json({error : "Recipes not found"})
     }
@@ -61,10 +73,10 @@ export const UpdateRecipe = (req : Request , res : Response) => {
 
 // Delete Recipe (Delete Recipe by id - Delete Method)
 
-export const DeleteRecipe = (req : Request , res : Response) => {
-    Recipe.findByIdAndDelete(req.query)
+export const DeleteRecipe = async (req : Request , res : Response) => {
+    await Recipe.findByIdAndDelete(req.query.id)
     try {
-       res.status(200).json({message : "Recipe is Deleted "})
+       res.status(200).json({message : "Recipe is Deleted"})
     } catch (error) {
        res.status(500).json({error : "Recipes not found"})
     }
