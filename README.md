@@ -47,14 +47,21 @@ middleware/ : Middleware, y compris la gestion de l'authentification.
 
  ## API Endpoints
 POST /auth/register : Enregistrement d'un nouvel utilisateur.
+
 POST /auth/login : Authentification d'un utilisateur existant.
+
 GET /auth/logout : Déconnexion du profil de l'utilisateur authentifié.
 
 POST /recipes : Enregistrement d'un nouvel recette.
+
 GET /recipes : Récupérer les recettes.
+
 GET /recipe/{id} : Récupérer la recette par leur id.
+
 PUT /recipe/{id} : Modifier la recette par leur id.
+
 DELETE /recipe/{id} : Supprimer la recette par leur id.
+
 
 
 
