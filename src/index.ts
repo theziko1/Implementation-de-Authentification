@@ -7,6 +7,7 @@ import dotenv from 'dotenv'
 import { AuthRoutes } from './routes/auth';
 import { RecipeRoutes } from './routes/recipe';
 
+
   
 const app : Express = express();
 
@@ -18,7 +19,7 @@ app.use(cors({
     credentials : true,
     origin : "http://localhost:5173",
 }))
-app.use("/",AuthRoutes)
+app.use("/auth",AuthRoutes)
 app.use("/",RecipeRoutes)
 
 // dotenv config for PORT and URL of DataBase
@@ -36,9 +37,7 @@ mongoose.connect(process.env.MONGO_URL  as string)
   console.log("Error connecting to MongoDB:", error);
 })
 
-app.get('/', (req : Request , res : Response ) => {
-  res.send('Hello, World!');
-});
+
 
 // listening to port in the server
 
