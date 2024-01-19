@@ -54,6 +54,7 @@ export const registration = async (req : Request,res : Response) => {
          const token = jwt.sign({ userId: User._id }, process.env.SECRET_KEY as string, {
             expiresIn: '6h',
             });
+         res.cookie('token',token)   
          res.status(200).json({token}) 
          
       } catch (error) {
@@ -61,5 +62,12 @@ export const registration = async (req : Request,res : Response) => {
       }
    }
 
-
+      export const logout = (req : Request,res : Response) => {
+         try {
+            res.clearCookie('token')
+            res.status(200).json({success : true, message : "logged out"})
+         } catch (error) {
+            res.status(500).json({success : false, message : "something went wrong"})
+         }
+      }
 
